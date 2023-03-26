@@ -26,7 +26,7 @@ public class Main {
 		WordnetStemmer stemmer = new WordnetStemmer(dict);
 		StanfordCoreNLP pipeline = initPipeline();
 
-		String text = "Put it back where you first found it.";
+		String text = "You're the worst";
 		String cleanText = text.replaceAll("[^\\w\\s']+", "");
 
 		processText(cleanText, pipeline, stemmer);
