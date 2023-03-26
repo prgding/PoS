@@ -18,11 +18,11 @@ import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.util.CoreMap;
 
 public class Main {
-	public final String ARTICLE_A = "a";
-	public final String ARTICLE_AN = "an";
-	public final String ARTICLE_THE = "the";
+	public static final String ARTICLE_A = "a";
+	public static final String ARTICLE_AN = "an";
+	public static final String ARTICLE_THE = "the";
 
-	private static IDictionary initDictionary() throws IOException {
+	public static void main(String[] args) throws IOException {
 		// 建立 WordNet 数据库的路径
 		String path = "/Users/dingshuai/Downloads/dict";
 		URL url = new URL("file", null, path);
@@ -30,22 +30,15 @@ public class Main {
 		// 建立 WordNet 数据库
 		IDictionary dict = new Dictionary(url);
 		dict.open();
-		return dict;
-	}
 
-	public static void main(String[] args) throws IOException {
-
-
-		IDictionary dict = initDictionary();
 		WordnetStemmer stemmer = new WordnetStemmer(dict);
-
 
 		Properties props = new Properties();
 		props.setProperty("annotators", "tokenize, ssplit, pos, lemma");
 		StanfordCoreNLP pipeline = new StanfordCoreNLP(props);
-		String text = "Please do it more slowly";
+		String text = "You're the best";
 		// 去掉标点符号
-		String cleanText = text.replaceAll("\\p{Punct}", "");
+		String cleanText = text.replaceAll("[^\\w\\s']+", "");
 		Annotation document = new Annotation(cleanText);
 		pipeline.annotate(document);
 		List<CoreMap> sentences = document.get(CoreAnnotations.SentencesAnnotation.class);
